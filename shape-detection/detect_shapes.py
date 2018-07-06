@@ -6,16 +6,11 @@ from pyimagesearch.shapedetector import ShapeDetector
 import argparse
 import imutils
 import cv2
-from gpiozero import LED
 from time import sleep
-
-led1 = LED(11)
-led2 = LED(12)
-led3 = LED(13)
 
 # load the image and resize it to a smaller factor so that
 # the shapes can be approximated better
-image = cv2.imread("/home/pi/shape-detection/shapes_and_colors.png")
+image = cv2.imread("shapes_and_colors.png")
 resized = imutils.resize(image, width=300)
 ratio = image.shape[0] / float(resized.shape[0])
 
@@ -23,8 +18,8 @@ ratio = image.shape[0] / float(resized.shape[0])
 # and threshold it
 gray = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
 blurred = cv2.GaussianBlur(gray, (5, 5), 0)
+# change the numbers here if the shape is a different colour(Defualt: Black)
 thresh = cv2.inRange(blurred,1,45)
-cv2.imshow("Image", thresh)
 cv2.waitKey(0)
 
 # find contours in the thresholded image and initialize the
@@ -56,17 +51,9 @@ for c in cnts:
                 0.5, (255, 255, 255), 2)
 
         # show the output image
-        print shape
-        if shape == "circle":
-                led1.on()
-        elif shape == "square":
-                led2.on()
-        elif shape == "triangle":
-                led3.on()
+        print(shape)
+
         sleep(1)
-        led1.off()
-        led2.off()
-        led3.off()
         cv2.imshow("Image", image)
         cv2.waitKey(0)
         

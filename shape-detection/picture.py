@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 
-
+# import the necessary packages
 from picamera import PiCamera
 from time import sleep
 import serial
 
+# take a picture
 camera = PiCamera()   
 camera.start_preview()
 sleep(5)

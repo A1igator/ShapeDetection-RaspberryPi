@@ -11,6 +11,7 @@ class ShapeDetector:
 		peri = cv2.arcLength(c, True)
 		approx = cv2.approxPolyDP(c, 0.04 * peri, True)
 
+                # initialize angles
 		i = approx[approx[:,:,0].argmin()][0]
 		r = approx[approx[:,:,0].argmax()][0]
 		t = approx[approx[:,:,1].argmin()][0]
@@ -31,10 +32,12 @@ class ShapeDetector:
 			# a square will have an aspect ratio that is approximately
 			# equal to one, otherwise, the shape is a rectangle
 			if ar >= 0.95 and ar <= 1.05:
-				shape = "square" 
+				shape = "square"
+			else:
+                                shape = "rectangle"
 
 
-		# otherwise, we assume the shape is a circle
+		# otherwise, we assume the shape is a circle if it has more than 6 vertices and the angles match up
 		elif (abs(i[1]-r[1])<60 and abs(t[0]-b[0])<60) and len(approx) >6:
 			shape = "circle"
 
